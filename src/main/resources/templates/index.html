@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Memory failure prediction</title>
+    <link href="asserts/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+
+        .select-ip{
+            width:200px;
+            heigth:30px;
+        }
+    </style>
+</head>
+<body>
+    <div th:width="300px" th:height="400px">
+        <form action="dashboard.html" th:action="@{/result}" method="post">
+            <h5>Select the file to predict:</h5>
+            <select class="select-ip" name="file">
+                <option th:value="${cur}" th:selected="${file}==${cur}?true:false" th:each="cur:${fileName}" th:text="${cur}">1</option>
+            </select>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+    <div>
+        <canvas class="my-4 chartjs-render-monitor" id="myChart" width="1076" height="454" style="display: block; width: 1076px; height: 454px;"></canvas>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+        ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="asserts/js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+    <script type="text/javascript" src="asserts/js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+    <script type="text/javascript" src="asserts/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+    <!-- Icons -->
+    <script type="text/javascript" src="asserts/js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+    <script>
+        feather.replace()
+    </script>
+
+    <!-- Graphs -->
+    <input id="data0" type="hidden" th:value="${prediction.getPrediction1()}" />
+    <input id="data1" type="hidden" th:value="${prediction.getPrediction2()}" />
+    <input id="data2" type="hidden" th:value="${prediction.getPrediction3()}" />
+    <input id="data3" type="hidden" th:value="${prediction.getPrediction4()}" />
+    <input id="data4" type="hidden" th:value="${prediction.getPrediction5()}" />
+    <input id="data5" type="hidden" th:value="${prediction.getPrediction6()}" />
+    <input id="data6" type="hidden" th:value="${prediction.getPrediction7()}" />
+    <input id="date" type="hidden" th:value="${date}" />
+    <script type="text/javascript" src="asserts/js/Chart.min.js" th:src="@{/asserts/js/Chart.min.js}"></script>
+    <script>
+        var ctx = document.getElementById("myChart");
+        var data0 = $("#data0").val();
+        var data1 = $("#data1").val();
+        var data2 = $("#data2").val();
+        var data3 = $("#data3").val();
+        var data4 = $("#data4").val();
+        var data5 = $("#data5").val();
+        var data6 = $("#data6").val();
+        var date = $("#date").val();
+
+        function getDate(day) {
+            var time=(new Date(date)).getTime()-day*24*60*60*1000;
+            var dd = new Date(time);
+            var y = dd.getFullYear();
+            var m = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
+            var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+            return y + "-" + m + "-" + d;
+        };
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [getDate(6), getDate(5), getDate(4), getDate(3), getDate(2), getDate(1), getDate(0)],
+                datasets: [{
+                    data: [data6, data5, data4, data3, data2, data1, data0],
+                    lineTension: 0,
+                    backgroundColor: 'transparent',
+                    borderColor: '#007bff',
+                    borderWidth: 4,
+                    pointBackgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }]
+                },
+                legend: {
+                    display: false,
+                }
+            }
+        });
+    </script>
+</body>
+</html>
