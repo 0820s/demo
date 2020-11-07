@@ -19,7 +19,7 @@ import java.util.Date;
 public class IndexController {
     @RequestMapping(value="/index")
     public String index(Model model, HttpSession session){
-        File files=new File("D:\\java\\data");
+        File files=new File("F:\\java scripts\\data");
         File[] array=files.listFiles();
         ArrayList<String> fileName=new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class IndexController {
         Date date=new Date(System.currentTimeMillis());
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy/MM/dd");
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("D:\\java\\data\\"+file));
+            BufferedReader reader = new BufferedReader(new FileReader("F:\\java scripts\\data\\"+file));
             reader.readLine();
             String line = null;
             while((line=reader.readLine())!=null){
