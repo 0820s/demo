@@ -22,6 +22,7 @@
             background-color: #ffffff;
             margin: 1%;
             margin-top: 0;
+            padding-top:.5%;
         }
 
         @-webkit-keyframes chartjs-render-animation {
@@ -50,8 +51,8 @@
         .select-ip{
             width:80%;
             heigth:30%;
-            margin-top: 1rem;
-            margin-bottom: 2rem;
+            margin-top: 15%;
+            margin-bottom: 15%;
         }
 
         .p-content{
@@ -59,8 +60,8 @@
             font-size: 14px;
             font-weight: 400;
             display: block;
-            margin-block-start: 1em;
-            margin-block-end: 1em;
+            margin-block-start: .8%;
+            margin-block-end: .8%;
             margin-inline-start: 0px;
             margin-inline-end: 0px;
         }
@@ -68,8 +69,8 @@
         .h-content{
             font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             display: block;
-            margin-block-start: 1em;
-            margin-block-end: 1em;
+            margin-block-start: 5%;
+            margin-block-end: 5%;
             margin-inline-start: 0px;
             margin-inline-end: 0px;
         }
@@ -77,15 +78,14 @@
         .slide{
             left:15%;
             width: 15%;
-            min-width: 215px;
             overflow: hidden;
-            margin-left: 5em;
-            margin-right: 5em;
-            margin-bottom: .8em;
-            margin-top: .8em;
-            padding: 10px;
+            margin-left: 4%;
+            margin-right: 4%;
+            margin-bottom: 1%;
+            margin-top: 1%;
+            padding: .5%;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: .5%;
             height: 90%;
             float: left;
             position: relative;
@@ -94,22 +94,22 @@
         .btn{
             background-color: #008cc1;
             color: #fff;
-            border-radius: 3px;
+            border-radius: .5%;
             border: 1px solid #dadada;
             display: inline-block;
-            margin-top: 2rem;
+            margin-top: 15%;
         }
 
         .div-half{
             height: 30%;
             background-color: #ffffff;
-            margin: 20px;
+            margin: 1%;
         }
 
         .div-all{
-            height: 60%;
+            height: 65%;
             background-color: #ffffff;
-            margin: 20px;
+            margin: 1%;
         }
 
         .div-chart{
@@ -128,7 +128,6 @@
 
         .div-text{
             text-align: left;
-            line-height: 1;
             margin-block-start: 0;
             margin-block-end: 0;
             margin-inline-start: 0px;
@@ -138,9 +137,17 @@
 
         .ul-content{
             text-align: left;
-            line-height: 1.8;
-            margin-block-start: 0;
+            margin-block-start: 2%;
             margin-block-end: 0;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding-inline-start: 0;
+        }
+
+        .ul-content-r{
+            text-align: left;
+            margin-block-start: 8%;
+            margin-block-end: 8%;
             margin-inline-start: 0px;
             margin-inline-end: 0px;
             padding-inline-start: 0;
@@ -148,23 +155,41 @@
 
         .p-text{
             text-align: left;
-            line-height: 1.8;
-            margin-top: 5px;
+            padding-top: 3%;
         }
 
         .div-chart-introduce{
             left:8%;
             width: 18%;
-            height: 60%;
+            height: 100%;
             overflow: hidden;
-            margin-top: 5em;
-            padding: 10px;
+            margin-top: 2%;
+            padding: 1%;
             float: left;
             position: relative;
         }
 
+        .div-state{
+            margin-top: 5%;
+            left: 8%;
+        }
+
+        .p-healthy{
+            color: #1e7e34;
+            font-weight: bold;
+            font-size: xx-large;
+            font-style: italic;
+        }
+
+        .p-failure{
+            color: #b21f2d;
+            font-weight: bold;
+            font-size: xx-large;
+            font-style: italic;
+        }
+
         .img-xgboost{
-            margin-top: 20%;
+            margin-top: 50%;
             width: 60%;
         }
     </style>
@@ -181,17 +206,18 @@
                 <h5 class="h-content">Monitor data introduction</h5>
                 <div class="div-text">
                     <p class="p-content">Memory related attributes are monitored and recorded into the csv files, including:</p>
-                    <ul class="ul-content">memory read bandwidth</ul>
-                    <ul class="ul-content">memory write bandwidth</ul>
-                    <ul class="ul-content">memory latency</ul>
-                    <ul class="ul-content">corrected errors</ul>
-                    <ul class="ul-content">error bank ID</ul>
+                    <ul class="ul-content">.corrected errors</ul>
+                    <ul class="ul-content">.error bank ID</ul>
+                    <ul class="ul-content">.memory latency</ul>
+                    <ul class="ul-content">.memory read bandwidth</ul>
+                    <ul class="ul-content">.memory write bandwidth</ul>
                 </div>
             </div>
             <div class="slide">
                 <form action="dashboard.html" th:action="@{/result}" method="post">
                     <h5 class="h-content">Select the file to predict:</h5>
                     <select class="select-ip" name="file">
+                        <option value="" disabled selected hidden>Choose here</option>
                         <option th:value="${cur}" th:selected="${file}==${cur}?true:false" th:each="cur:${fileName}" th:text="${cur}">1</option>
                     </select>
                     <button class="btn" type="submit">Predict</button>
@@ -199,6 +225,13 @@
             </div>
             <div class="slide">
                 <h5 class="h-content">Server information</h5>
+                <div class="div-text">
+                    <ul class="ul-content-r" th:text="'Server brand: '+${server.getServerBrand()}">server brand</ul>
+                    <ul class="ul-content-r" th:text="'CPU platform: '+${server.getPlatform()}">CPU platform</ul>
+                    <ul class="ul-content-r" th:text="'CPU process: '+${server.getCPUSpeed()}">CPU process</ul>
+                    <ul class="ul-content-r" th:text="'Memory manufactory: '+${server.getMemoryManufactory()}">memory manufactory</ul>
+                    <ul class="ul-content-r" th:text="'Memory Speed: '+${server.getMemorySpeed()}">memory Speed</ul>
+                </div>
             </div>
         </div>
 
@@ -206,14 +239,17 @@
             <div class="div-chart-introduce">
                 <div>
                     <h5 class="h-content">Prediction result</h5>
-                    <p class="p-text">Through a pre-trained XGBoost model, we predict that the memory will not fail currently.</p>
-                    <p class="p-text">The failure probability within one week is shown in the figure on the right.</p>
+                    <p class="p-text">Through a pre-trained XGBoost model, we predict that the memory is:</p>
+                </div>
+                <div class="div-state">
+                    <p th:class="${state} eq 'healthy'?'p-healthy':'p-failure'" th:text="${state} eq 'healthy'?'healthy':'about to fail'">healthy</p>
                 </div>
                 <div>
                     <img src="xgboost.png" class="img-xgboost">
                 </div>
             </div>
             <div class="div-chart">
+                <p>The memory failure probability within one week of the selected file.</p>
                 <canvas class="chart my-4 chartjs-render-monitor" id="myChart"></canvas>
             </div>
         </div>
