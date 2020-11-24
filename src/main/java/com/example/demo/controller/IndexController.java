@@ -22,7 +22,8 @@ public class IndexController {
         String path=System.getProperty("path");
         String filePath;
         if(path==null){
-            filePath="D:\\java\\predict\\samples_neg";
+            //filePath="D:\\java\\predict\\samples_neg";
+            filePath="F:\\java scripts\\samples_neg";
         }else{
             filePath=path+"/samples_neg";
         }
@@ -73,9 +74,12 @@ public class IndexController {
         String filePath;
         String pythonPath;
         if(path==null){
-            pythonPath="D:\\java\\predict\\model\\xgbst_demo.py ";
-            filePath="D:\\java\\predict\\samples_neg\\"+file;
-            path="D:\\java\\predict";
+            //pythonPath="D:\\java\\predict\\model\\xgbst_demo.py ";
+            pythonPath="F:\\Python Scripts\\model\\xgbst_demo.py ";
+            //filePath="D:\\java\\predict\\samples_neg\\"+file;
+            filePath="F:\\java scripts\\samples_neg\\"+file;
+            //path="D:\\java\\predict";
+            path="F:\\Python Scripts\\model";
         }else{
             pythonPath=path+"/model/xgbst_demo.py ";
             filePath=path+"/samples_neg/"+file;
